@@ -4,9 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const promptText = document.getElementById('prompt-text');
     const buttonText = copyButton.querySelector('.button-text');
 
+    function cleanText(text) {
+        return text
+            .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
+            .replace(/\r?\n/g, '\n') // Normalize line endings
+            .trim(); // Remove extra whitespace
+    }
+
     copyButton.addEventListener('click', async function() {
         try {
-            await navigator.clipboard.writeText(promptText.textContent);
+            const textToCopy = cleanText(promptText.innerText);
+            await navigator.clipboard.writeText(textToCopy);
             copyButton.classList.add('copied');
             buttonText.textContent = 'Copied!';
             appButton.disabled = false;
