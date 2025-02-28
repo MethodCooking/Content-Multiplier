@@ -22,3 +22,4 @@ document.addEventListener('DOMContentLoaded', function() {
     appButton.addEventListener('click', function() {
         window.location.href = 'https://chat.openai.com/';
     });
+});
