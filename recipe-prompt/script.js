@@ -13,12 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             setTimeout(() => {
                 copyButton.classList.remove('copied');
-                buttonText.textContent = 'Copy Prompt';
+                buttonText.textContent = 'Copy Recipe';
             }, 2000);
         } catch (err) {
             console.error('Failed to copy text: ', err);
         }
     });
+
     appButton.addEventListener('click', function() {
         window.location.href = 'https://chat.openai.com/';
     });
