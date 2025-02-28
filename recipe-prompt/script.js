@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const CONFIG = {
+        appUrl: 'chatgpt://g/g-20Ce4z9Ee-method-cooking',
         webUrl: 'https://chat.openai.com/g/g-20Ce4z9Ee-method-cooking',
         copyTimeout: 2000
     };
@@ -38,7 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     appButton.addEventListener('click', function() {
-        // Always use the web URL - it will automatically open in the app if installed
-        window.location.href = CONFIG.webUrl;
+        // Try to open in ChatGPT app first
+        window.location.href = CONFIG.appUrl;
+        
+        // Fallback to web version after a short delay
+        setTimeout(() => {
+            window.open(CONFIG.webUrl, '_blank');
+        }, 1000);
     });
 });
