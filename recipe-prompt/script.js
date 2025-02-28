@@ -11,18 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttonText = copyButton.querySelector('.button-text');
 
     function cleanText(text) {
-        // Create a temporary div to strip any hidden formatting
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = text;
-        
-        // Get plain text without any formatting or hidden attributes
         let cleanedText = tempDiv.textContent;
-        
         return cleanedText
-            .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
-            .replace(/\r?\n/g, '\n') // Normalize line endings
-            .replace(/[^\x20-\x7E\n]/g, '') // Remove any non-printable characters
-            .trim(); // Remove extra whitespace
+            .replace(/[\u200B-\u200D\uFEFF]/g, '')
+            .replace(/\r?\n/g, '\n')
+            .replace(/[^\x20-\x7E\n]/g, '')
+            .trim();
     }
 
     copyButton.addEventListener('click', async function() {
@@ -43,12 +39,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     appButton.addEventListener('click', function() {
-        // Try to open in ChatGPT app first
-        window.location.href = CONFIG.appUrl;
+        // Try to detect if we're on iOS
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         
-        // Fallback to web version after a short delay
-        setTimeout(() => {
-            window.open(CONFIG.webUrl, '_blank');
-        }, 1000);
+        if (isIOS) {
+            // On iOS, directly use the web URL to avoid the invalid address error
+            window.location.href = CONFIG.webUrl;
+        } else {
+            // On other platforms, try the app URL first with fallback
+            const appWindow = window.open(CONFIG.appUrl, '_blank');
+            
+            // If opening the app URL fails or after a delay, try the web URL
+            setTimeout(() => {
+                if (!appWindow || appWindow.closed) {
+                    window.location.href = CONFIG.webUrl;
+                }
+            }, 1000);
+        }
     });
 });
