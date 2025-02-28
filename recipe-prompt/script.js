@@ -19,4 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Failed to copy text: ', err);
         }
     });
-});
+    appButton.addEventListener('click', function() {
+        window.location.href = 'https://chat.openai.com/';
+    });
