@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const CONFIG = {
-        appUrl: 'chatgpt://g/g-20Ce4z9Ee-method-cooking',
         webUrl: 'https://chat.openai.com/g/g-20Ce4z9Ee-method-cooking',
         copyTimeout: 2000
     };
@@ -39,22 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     appButton.addEventListener('click', function() {
-        // Try to detect if we're on iOS
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        
-        if (isIOS) {
-            // On iOS, directly use the web URL to avoid the invalid address error
-            window.location.href = CONFIG.webUrl;
-        } else {
-            // On other platforms, try the app URL first with fallback
-            const appWindow = window.open(CONFIG.appUrl, '_blank');
-            
-            // If opening the app URL fails or after a delay, try the web URL
-            setTimeout(() => {
-                if (!appWindow || appWindow.closed) {
-                    window.location.href = CONFIG.webUrl;
-                }
-            }, 1000);
-        }
+        // Always use the web URL - it will automatically open in the app if installed
+        window.location.href = CONFIG.webUrl;
     });
 });
