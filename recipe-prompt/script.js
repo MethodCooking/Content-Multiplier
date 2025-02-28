@@ -5,9 +5,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttonText = copyButton.querySelector('.button-text');
 
     function cleanText(text) {
-        return text
+        // Create a temporary div to strip any hidden formatting
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = text;
+        
+        // Get plain text without any formatting or hidden attributes
+        let cleanedText = tempDiv.textContent;
+        
+        return cleanedText
             .replace(/[\u200B-\u200D\uFEFF]/g, '') // Remove zero-width spaces
             .replace(/\r?\n/g, '\n') // Normalize line endings
+            .replace(/[^\x20-\x7E\n]/g, '') // Remove any non-printable characters
             .trim(); // Remove extra whitespace
     }
 
